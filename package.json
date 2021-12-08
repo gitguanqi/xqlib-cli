@@ -1,0 +1,29 @@
+{
+  "name": "xqlib-cli",
+  "version": "1.0.0",
+  "description": "This is a scaffolding tool for xqlib.",
+  "main": "index.js",
+  "bin": {
+    "xqlib-cli": "bin/xqlib-cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitguanqi/xqlib-cli.git"
+  },
+  "keywords": [
+    "xqlib-cli",
+    "cli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitguanqi/xqlib-cli/issues"
+  },
+  "homepage": "https://github.com/gitguanqi/xqlib-cli#readme",
+  "dependencies": {
+    "commander": "^8.3.0"
+  }
+}
