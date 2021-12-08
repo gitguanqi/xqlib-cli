@@ -14,7 +14,7 @@ program.parse(process.argv);
 
 const options = program.opts();
 if (options.version) {
-    console.log('1.0.0');
+    console.log('1.0.1');
 }
 if (options.lib) {
     let name = options.lib;

@@ -1,6 +1,6 @@
 {
   "name": "xqlib-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a scaffolding tool for xqlib.",
   "main": "index.js",
   "bin": {
@@ -17,8 +17,8 @@
     "xqlib-cli",
     "cli"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "gitguanqi",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gitguanqi/xqlib-cli/issues"
   },
