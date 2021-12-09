@@ -16,57 +16,36 @@
 npm install xqlib-cli -g
 ```
 
-+ 启动生成标准库命令
++ 查看版本
+
+```sh
+xqlib-cli -v
+```
+
++ 查看信息
+
+```sh
+xqlib-cli -i
+```
+
++ 构建库命令
 
 ```sh
 xqlib-cli -l <库名称>
 ```
 
-+ 打包
++ 帮助中心
 
 ```sh
-webpack
-```
-
-+ 测试
-
-```sh
-npm test
+xqlib-cli -h
 ```
 
 ## 案例
 
 比如我想生成一个`test`的js库，可以遵循以下步骤实现。
 
-+ 下载包
-
 ```sh
-npm install xqlib-cli -g
-```
-
-+ 启动生成命令
-
-```sh
-# 启动
 xqlib-cli -l test
-
-# 结果
-A jslib will be generated soon.
-[1/4] Process: Start generating template library.
-[2/4] Process: The template library folder was created successfully.
-[3/4] Process: Pulling the latest template warehouse, please wait a moment.
-[4/4] Process: The latest template warehouse is successfully pulled.
-congratulations! The js standard library is successfully installed, please run the following command:
-  cd test
-  npm install
-  webpack
-Thank you very much for using this scaffolding to generate the js standard library!
-```
-
-+ 打包
-
-```sh
-webpack
 ```
 
 ## 提问题
