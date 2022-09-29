@@ -30,6 +30,12 @@ xqlib-cli -i
 xqlib-cli -l <library name>
 ```
 
++ Build umd command
+
+```sh
+xqlib-cli -u <umd name>
+```
+
 + Help Center
 
 ```sh

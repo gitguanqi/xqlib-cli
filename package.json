@@ -1,6 +1,6 @@
 {
   "name": "xqlib-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "This is a scaffolding tool for xqlib.",
   "bin": {
     "xqlib-cli": "bin/xqlib-cli.js"

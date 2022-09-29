@@ -13,7 +13,8 @@ const { init } = require('../lib/init');
 program
 .option('-v, --version', 'show version')
 .option('-i, --info', 'show about us')
-.option('-l, --lib <name>', 'init a lib');
+.option('-l, --lib <name>', 'init a webpack package')
+.option('-u, --umd <name>', 'init a umd package');
 
 program.parse(process.argv);
 
@@ -30,6 +31,12 @@ author: ${package.author}`;
 if (options.lib) {
     let name = options.lib;
     if (name) {
-        return init(name);
+        return init(name, 'webpack');
+    }
+}
+if (options.umd) {
+    let name = options.umd;
+    if (name) {
+        return init(name, 'umd');
     }
 }
