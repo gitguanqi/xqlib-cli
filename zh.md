@@ -34,6 +34,12 @@ xqlib-cli -i
 xqlib-cli -l <库名称>
 ```
 
++ 构建umd模块
+
+```sh
+xqlib-cli -u <umd name>
+```
+
 + 帮助中心
 
 ```sh
@@ -50,7 +56,7 @@ xqlib-cli -l test
 
 ## 提问题
 
-[提交问题](https://github.com/gitguanqi/xqsql/issues/new)
+[提交问题](https://github.com/gitguanqi/xqlib-cli/issues/new)
 
 ## 作者
 
