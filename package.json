@@ -5,8 +5,16 @@
   "bin": {
     "xqlib-cli": "bin/xqlib-cli.js"
   },
+  "files": [
+    "bin",
+    "lib",
+    "zh.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test \"tests/*.test.js\""
   },
   "repository": {
     "type": "git",

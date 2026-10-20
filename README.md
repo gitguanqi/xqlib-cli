@@ -42,6 +42,50 @@ xqlib-cli -u <umd name>
 xqlib-cli -h
 ```
 
+## Library names
+
+The name you pass is used as the directory name and as the `name` field of the generated
+`package.json`. It must be a valid npm package name: lowercase letters, digits, `.`, `-` or `_`,
+starting with a letter or digit, at most 214 characters. Anything containing a path separator is
+rejected, so the scaffold never writes outside the current directory.
+
+`-l` and `-u` are mutually exclusive; pass only one of them. Every failure path exits with a
+non-zero code, so the command can be used in scripts.
+
+## Templates
+
++ `-l <name>` generates a webpack library: `index.js` + `lib/index.js`, `webpack.config.js`,
+  `babel.config.js`, a jest spec, and an `example/` demo page. `npm test` builds `dist/` first
+  and then runs jest.
++ `-u <name>` generates a UMD / ES module library with four committed builds
+  (`lib/example.js`, `lib/example.min.js`, `lib/example-esm.js`, `lib/example-esm.min.js`),
+  bilingual docs, and a self-checking page suite under `test/`.
+
+Both templates ship a `README.md`, a `zh.md`, and a `.gitignore`.
+
+## Verifying a generated library
+
+```sh
+cd <library name>
+npm test              # node check
+npm run test:browser  # static server for the test/ pages (UMD template)
+```
+
+The UMD template's `test/` pages show a visible PASS/FAIL list for the global, CommonJS, AMD and
+ES module consumption paths. The ES module page must be opened over HTTP, because browsers block
+`type="module"` on `file://` URLs.
+
+## Development
+
+```sh
+npm install
+npm test
+```
+
+`npm test` runs `node --test` over `tests/*.test.js`. The suite scaffolds both templates into a
+temporary directory, asserts the file contract, and executes all four committed builds of the UMD
+template inside a `vm` context.
+
 ## Case
 
 For example, if I want to generate a `test` js library, I can follow the steps below.
