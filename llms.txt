@@ -1,0 +1,90 @@
+# xqlib-cli
+
+Scaffolding CLI that generates a ready-to-build JavaScript library project from one command:
+either a webpack-bundled UMD library or a UMD + ES-module library with committed minified builds.
+Runs on Node.js >= 18 and ships as a binary only — there is no `main`, `exports`, or importable API,
+so consume it through the `xqlib-cli` executable, never through `require('xqlib-cli')`.
+
+## Install
+
+```sh
+npm install xqlib-cli -g   # global binary
+npx xqlib-cli -h           # or run once without installing
+```
+
+## Commands
+
+| Command | Effect | Exit |
+| --- | --- | --- |
+| `xqlib-cli -l, --lib <name>` | Scaffold the webpack template into `./<name>` | 0 on success |
+| `xqlib-cli -u, --umd <name>` | Scaffold the UMD + ESM template into `./<name>` | 0 on success |
+| `xqlib-cli -v, --version` | Print `xqlib-cli@<version>` | 0 |
+| `xqlib-cli -i, --info` | Print `name:`, `version:`, `author:` lines | 0 |
+| `xqlib-cli -h, --help` (or no arguments) | Print usage | 0 |
+| Any invalid input | Print `Error: ...` on stderr | 1 |
+
+## Key Rules
+
+- `<name>` is both the created directory and the `name` field of the generated `package.json`.
+  It must match `^[a-z0-9][a-z0-9._-]*$` and be at most 214 characters: lowercase letters, digits,
+  `.`, `-`, `_`, starting with a letter or digit. Uppercase, spaces, a leading dot, and any path
+  separator are rejected, so scaffolding never writes outside the current directory.
+- `-l` and `-u` are mutually exclusive; passing both exits 1 without touching disk.
+- The target directory is created relative to the current working directory. An existing path of
+  the same name is refused (`The library name already exists!`), so a failed or repeated run never
+  silently overwrites files.
+- The scaffold writes files only; it never runs `npm install` and needs no network access.
+
+## Generated webpack template (`-l`)
+
+- Entry chain: `index.js` -> `lib/index.js`, bundled to `dist/mytest.js` with webpack
+  (`library: 'mytest'`, `libraryTarget: 'umd'`, `jquery` kept external as global `jQuery`).
+- `package.json` sets `main` to `./dist/mytest.js`; scripts are `build` (`webpack`), `pretest`
+  (`webpack`) and `test` (`jest`), so `npm test` rebuilds before running jest.
+- Also ships `add.test.js`, `babel.config.js`, `example/node.js`, `example/browser.html`,
+  `README.md`, `zh.md`, `.gitignore`.
+- Next steps: `cd <name> && npm install && npm run build && npm test`.
+
+## Generated UMD template (`-u`)
+
+- `package.json` sets `main` to `lib/example.js`, `module` to `lib/example-esm.js`, `unpkg` to
+  `lib/example.min.js`; all four builds are committed, so publishing needs no build step.
+- The library object is `{ name: 'example', add(a, b), sayHi(name) }`, exposed as global `example`
+  in the browser, via CommonJS, via AMD, and as the default ES-module export.
+- Scripts: `test` (`node test/node.js`, zero-dependency assertions over the readable and minified
+  builds) and `test:browser` (`node test/server.js`, static server for the self-checking pages,
+  default `http://localhost:4001`, overridable with `PORT` / `HOST`).
+- `test/` pages cover the global, CommonJS-on-node, AMD and ES-module paths and print PASS/FAIL.
+- Next steps: `cd <name> && npm test && npm run test:browser`.
+
+## Typical Use
+
+```sh
+# Create a UMD library named "my-lib", then verify it
+npx xqlib-cli -u my-lib
+cd my-lib
+npm test
+npm run test:browser
+```
+
+```sh
+# Create a webpack-bundled library and build it
+npx xqlib-cli -l my-lib
+cd my-lib
+npm install
+npm run build
+```
+
+```sh
+# Script-safe: the exit code is authoritative
+npx xqlib-cli -u my-lib || echo "scaffold failed"
+```
+
+## Constraints
+
+- Node.js >= 18; the only runtime dependency is `commander`.
+- Names are case-sensitive and must be lowercase; the generated project keeps the name verbatim.
+- The ES-module test page must be served over HTTP — `type="module"` is blocked on `file://`.
+- The webpack template's demo page expects jQuery to be loaded by the page itself, because
+  `jquery` is declared external in `webpack.config.js`.
+- Generated projects are ordinary npm packages: `xqlib-cli` is not a runtime dependency of them.

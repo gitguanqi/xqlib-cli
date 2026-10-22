@@ -1,0 +1,2 @@
+# Husky hooks are sourced by sh; CRLF line endings break them on Windows checkouts.
+.husky/* text eol=lf

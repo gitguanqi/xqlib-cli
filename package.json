@@ -1,6 +1,6 @@
 {
   "name": "xqlib-cli",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "This is a scaffolding tool for xqlib.",
   "bin": {
     "xqlib-cli": "bin/xqlib-cli.js"
@@ -8,13 +8,19 @@
   "files": [
     "bin",
     "lib",
+    "skills",
+    "llms.txt",
     "zh.md"
   ],
+  "llms": "./llms.txt",
+  "agents": "./skills/xqlib-cli-scaffold/SKILL.md",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test \"tests/*.test.js\""
+    "test": "node --test \"tests/*.test.js\"",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -32,5 +38,11 @@
   "homepage": "https://github.com/gitguanqi/xqlib-cli#readme",
   "dependencies": {
     "commander": "^8.3.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0"
   }
 }

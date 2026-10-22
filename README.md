@@ -75,6 +75,21 @@ The UMD template's `test/` pages show a visible PASS/FAIL list for the global, C
 ES module consumption paths. The ES module page must be opened over HTTP, because browsers block
 `type="module"` on `file://` URLs.
 
+## For AI agents
+
+The package ships agent-readable metadata, declared in `package.json` and included in the
+published tarball:
+
++ `llms.txt` (`"llms"`) — compact CLI reference: flags, name rules, exit codes, and what each
+  template generates.
++ `skills/xqlib-cli-scaffold/SKILL.md` (`"agents"`) — when to pick `-l` vs `-u`, the order to run
+  things in, common failure modes, and a link to `references/templates.md` with the exact
+  generated file contracts.
+
+An assistant should load `SKILL.md` before generating a library and use `llms.txt` when it only
+needs the command surface. `npm test` asserts that both targets resolve, that they are covered by
+the `files` whitelist, and that the flags named in `llms.txt` match `xqlib-cli -h` exactly.
+
 ## Development
 
 ```sh
@@ -85,6 +100,18 @@ npm test
 `npm test` runs `node --test` over `tests/*.test.js`. The suite scaffolds both templates into a
 temporary directory, asserts the file contract, and executes all four committed builds of the UMD
 template inside a `vm` context.
+
+### Commits
+
+Husky installs two hooks on `npm install` (`prepare`):
+
+- `pre-commit` runs `lint-staged`, which syntax-checks staged `*.js` files with `node --check`.
+- `commit-msg` runs `commitlint`. Messages must follow Conventional Commits
+  (`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`, `build:`, `ci:`, `revert:`,
+  `chore:`), e.g. `feat: support agent metadata`.
+
+Bump `version` in `package.json` before publishing. Follow semver: `patch` for fixes, `minor` for
+backward-compatible features, `major` for breaking changes.
 
 ## Case
 

@@ -1,0 +1,5 @@
+interface:
+  display_name: "xqlib-cli Scaffold"
+  short_description: "Scaffold a JS library with xqlib-cli"
+  brand_color: "#0B7285"
+  default_prompt: "Use $xqlib-cli-scaffold to pick the right xqlib-cli template, generate the library, and verify the generated project."

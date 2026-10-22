@@ -75,6 +75,18 @@ npm run test:browser  # 启动静态服务器查看 test/ 页面（UMD 模板）
 UMD 模板的 `test/` 页面会把全局、CommonJS、AMD、ES 模块四种消费路径的 PASS/FAIL 直接显示在
 页面上。ES 模块页面必须经 HTTP 打开，浏览器在 `file://` 下会拦截 `type="module"`。
 
+## 给 AI 助手用的元数据
+
+本包在 `package.json` 里声明了面向 AI 助手的元数据，并随发布包一起分发：
+
++ `llms.txt`（`"llms"`）——精简命令参考：参数、库名规则、退出码、两个模板各自的产物。
++ `skills/xqlib-cli-scaffold/SKILL.md`（`"agents"`）——何时选 `-l`、何时选 `-u`，执行顺序，
+  常见失败原因，并链接到 `references/templates.md` 里逐文件的产物契约。
+
+只关心命令面时读 `llms.txt`；要真正生成并验证一个库时读 `SKILL.md`。
+`npm test` 会校验两个元数据目标存在、被 `files` 白名单覆盖，且 `llms.txt` 里写的参数与
+`xqlib-cli -h` 的输出完全一致。
+
 ## 开发
 
 ```sh
